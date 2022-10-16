@@ -49,8 +49,8 @@ void vrsn_flash_res(TD_LT_ARGS);
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT( /* Base */
-        KC_BTN1, KC_BTN3, KC_BTN2,   // Primary Buttons
-        TD(BTN4_XTRA), TD(BTN5_SCRL) // Secondary Buttons
+        KC_BTN1, KC_BTN3, TD(BTN4_XTRA), // Primary Buttons
+        KC_BTN2, TD(BTN5_SCRL)           // Secondary Buttons
     ),
 
     [SCRL] = LAYOUT(
@@ -59,8 +59,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [XTRA] = LAYOUT(
-        KC_BTN6, KC_BTN8, KC_BTN7,
-        _______, TD(VRSN_FLASH)
+        KC_BTN6, KC_BTN8, _______,
+        KC_BTN7, TD(VRSN_FLASH)
     ),
 };
 
