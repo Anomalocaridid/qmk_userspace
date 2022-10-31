@@ -33,34 +33,30 @@ enum custom_keycodes_keymap {
     HORI_SCROLL = KEYMAP_SAFE_RANGE,
 };
 
-enum td_keycodes { BTN4_XTRA, BTN5_SCRL, VRSN_FLASH };
+enum td_keycodes { VRSN_FLASH };
 
-typedef enum { TD_NONE, TD_UNKNOWN, TD_SINGLE_TAP, TD_SINGLE_HOLD, TD_DOUBLE_TAP } td_state_t;
+typedef enum { TD_NONE, TD_UNKNOWN, TD_SINGLE_TAP, TD_DOUBLE_TAP } td_state_t;
 
 // determine tap dance state
 td_state_t cur_dance(qk_tap_dance_state_t *state);
 
-#define TD_LT_ARGS qk_tap_dance_state_t *state, void *user_data
-void lt_finished(TD_LT_ARGS, uint16_t keycode, int layer);
-void lt_reset(TD_LT_ARGS, uint16_t keycode, int layer);
-
-void vrsn_flash_res(TD_LT_ARGS);
+void vrsn_flash_res(qk_tap_dance_state_t *state, void *user_data);
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT( /* Base */
-        KC_BTN1, KC_BTN3, TD(BTN4_XTRA), // Primary Buttons
-        KC_BTN2, TD(BTN5_SCRL)           // Secondary Buttons
+        KC_BTN1, KC_BTN3, LT(XTRA, KC_BTN4), // Primary Buttons
+        KC_BTN2, LT(SCRL, KC_BTN5)           // Secondary Buttons
     ),
 
     [SCRL] = LAYOUT(
-        DRAG_SCROLL, HORI_SCROLL, QK_BOOT,
+        DRAG_SCROLL, HORI_SCROLL, TD(VRSN_FLASH),
         DPI_CONFIG, _______
     ),
 
     [XTRA] = LAYOUT(
         KC_BTN6, KC_BTN8, _______,
-        KC_BTN7, TD(VRSN_FLASH)
+        KC_BTN7, QK_BOOT
     ),
 };
 
@@ -94,11 +90,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 td_state_t cur_dance(qk_tap_dance_state_t *state) {
     switch (state->count) {
         case 1:
-            if (state->interrupted || !state->pressed) {
-                return TD_SINGLE_TAP;
-            } else {
-                return TD_SINGLE_HOLD;
-            }
+            return TD_SINGLE_TAP;
         case 2:
             return TD_DOUBLE_TAP;
         default:
@@ -106,48 +98,7 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
     }
 }
 
-static td_state_t td_state;
-
-void lt_finished(TD_LT_ARGS, uint16_t keycode, int layer) {
-    td_state = cur_dance(state);
-
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            register_code16(keycode);
-            break;
-        case TD_SINGLE_HOLD:
-            layer_on(layer);
-            break;
-        default:
-            break;
-    }
-}
-
-void lt_reset(TD_LT_ARGS, uint16_t keycode, int layer) {
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            unregister_code16(keycode);
-            break;
-        case TD_SINGLE_HOLD:
-            layer_off(layer);
-            break;
-        default:
-            break;
-    }
-}
-
-#define TD_PROTO(name, func) void name##_##func(TD_LT_ARGS)
-#define TD_LT_FUNC(name, keycode, layer, func)       \
-    TD_PROTO(name, func);                            \
-    TD_PROTO(name, func) {                           \
-        lt_##func(state, user_data, keycode, layer); \
-    }
-#define TD_LT(name, keycode, layer) TD_LT_FUNC(name, keycode, layer, finished) TD_LT_FUNC(name, keycode, layer, reset)
-
-TD_LT(btn4_xtra, KC_BTN4, XTRA)
-TD_LT(btn5_scrl, KC_BTN5, SCRL)
-
-void vrsn_flsh(TD_LT_ARGS) {
+void vrsn_flsh(qk_tap_dance_state_t *state, void *user_data) {
     switch (cur_dance(state)) {
         case TD_SINGLE_TAP:
             send_version();
@@ -161,7 +112,5 @@ void vrsn_flsh(TD_LT_ARGS) {
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [BTN4_XTRA]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, btn4_xtra_finished, btn4_xtra_reset), // KC_BTN4/XTRA layer
-    [BTN5_SCRL]  = ACTION_TAP_DANCE_FN_ADVANCED(NULL, btn5_scrl_finished, btn5_scrl_reset), // KC_BTN4/SCRL layer
-    [VRSN_FLASH] = ACTION_TAP_DANCE_FN(vrsn_flsh)                                           // VRSN/FLSH
+    [VRSN_FLASH] = ACTION_TAP_DANCE_FN(vrsn_flsh) // VRSN/FLSH
 };
