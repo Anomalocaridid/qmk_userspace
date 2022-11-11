@@ -19,33 +19,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 0: Base layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |  Home  |   1  |   2  |   3  |   4  |   5  |      |           | ARRW |   6  |   7  |   8  |   9  |   0  |        |
+ * |        |   1  |   2  |   3  |   4  |   5  |      |           |  =   |   6  |   7  |   8  |   9  |   0  |   -    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |  End   |   Q  |   W  |   E  |   R  |   T  | FNCT |           |Delete|   Y  |   U  |   I  |   O  |   P  |   \    |
+ * |        |   Q  |   W  |   E  |   R  |   T  | FNCT |           |Delete|   Y  |   U  |   I  |   O  |   P  |   \    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |Page Up |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   ;  |   -    |
+ * |L Shift(|   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |   ;  |R Shift)|
  * |--------+------+------+------+------+------| Left |           |Right |------+------+------+------+------+--------|
- * |PageDown|   Z  |   X  |   C  |   V  |   B  | GUI  |           |GUI   |   N  |   M  |   ,  |   .  |   /  |   =    |
+ * | L Ctrl |   Z  |   X  |   C  |   V  |   B  | GUI  |           |GUI   |   N  |   M  |   ,  |   .  |   /  | R Ctrl |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |ESC/~`|  '"  | Left |Right |                                       |  Up  | Down |   [  |   ]  |       |
+ *   |L Alt |ESC/~`|  '"  | Left |Right |                                       |  Up  | Down |   [  |   ]  |R Alt |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        |L Alt | Swap |       | MOUS |R Alt |
+ *                                        |      |      |       | MOUS | ARRW |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |L Ctrl|       |R Ctrl|      |      |
+ *                                 |      |      | HOME |       |PageUp|      |      |
  *                                 |Space | Tab  |------|       |------|Enter |BackSp|
- *                                 |      |      |Shift(|       |Shift)|      |      |
+ *                                 |      |      |Sw/End|       |PageDn|      |      |
  *                                 `--------------------'       `--------------------'
  */
     [BASE] = LAYOUT_ergodox_pretty(
-        KC_HOME, KC_1,    KC_2,    KC_3,    KC_4,    KC_5, _______,                    TG(ARRW), KC_6, KC_7,  KC_8,    KC_9,    KC_0,    _______,
-        KC_END,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, TT(FNCT),                   KC_DEL,   KC_Y, KC_U,  KC_I,    KC_O,    KC_P,    KC_BSLS,
-        KC_PGUP, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                       KC_H, KC_J,  KC_K,    KC_L,    KC_SCLN, KC_MINUS,
-        KC_PGDN, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_LGUI,                    KC_RGUI,  KC_N, KC_M,  KC_COMM, KC_DOT,  KC_SLSH, KC_EQL,
-        XXXXXXX, KC_GESC, KC_QUOT, KC_LEFT, KC_RGHT,                                                   KC_UP, KC_DOWN, KC_LBRC, KC_RBRC, _______,
-                                                           KC_LALT, SH_MON, TG(MOUS), KC_RALT,
-                                                                    KC_LCTL, KC_RCTL,
-                                                 KC_SPACE, KC_TAB,  KC_LSPO, KC_RSPC, KC_ENTER, KC_BSPC
+        XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5, XXXXXXX,                         KC_EQL,  KC_6, KC_7,  KC_8,    KC_9,    KC_0,    KC_MINUS,
+        XXXXXXX, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T, TT(FNCT),                        KC_DEL,  KC_Y, KC_U,  KC_I,    KC_O,    KC_P,    KC_BSLS,
+        KC_LSPO, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                                           KC_H, KC_J,  KC_K,    KC_L,    KC_SCLN, KC_RSPC,
+        KC_LCTL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_LGUI,                         KC_RGUI, KC_N, KC_M,  KC_COMM, KC_DOT,  KC_SLSH, KC_RCTL,
+        KC_LALT, KC_GESC, KC_QUOT, KC_LEFT, KC_RGHT,                                                       KC_UP, KC_DOWN, KC_LBRC, KC_RBRC, KC_RALT,
+                                                           XXXXXXX, XXXXXXX,      TG(MOUS), TG(ARRW),
+                                                                    KC_HOME,      KC_PGUP,
+                                                 KC_SPACE, KC_TAB,  SH_T(KC_END), KC_PGDN,  KC_ENTER, KC_BSPC
   ),
 
 /* Keymap 1: Function layer
@@ -62,11 +62,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   |RecStp|      |      |      |      |                                       |      |      |      |      |Version|
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        |L Alt | Swap |       |      |R Alt |
+ *                                        |      |      |       |      |      |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |L Ctrl|       |R Ctrl|      |      |
+ *                                 |      |      | Home |       |PageUp|      |      |
  *                                 |Space | Tab  |------|       |------|Enter |BackSp|
- *                                 |      |      |Shift(|       |Shift)|      |      |
+ *                                 |      |      |Sw/End|       |PageDn|      |      |
  *                                 `--------------------'       `--------------------'
  */
     [FNCT] = LAYOUT_ergodox_pretty(
@@ -75,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         DM_PLY1, KC_F21,  KC_F22,  KC_F23,  KC_F24,  XXXXXXX,                                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         DM_PLY2, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,                   _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, ALTCASE,
         DM_RSTP, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                                       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, VRSN,
-                                                              _______, _______, XXXXXXX, _______,
+                                                              _______, _______, XXXXXXX, XXXXXXX,
                                                                        _______, _______,
                                                      _______, _______, _______, _______, _______, _______
   ),
@@ -83,22 +83,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 2: Mouse layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |  Home  |   1  |   2  |   3  |   4  |   5  |      |           |      |   6  |   7  |   8  |   9  |   0  |        |
+ * |        |   1  |   2  |   3  |   4  |   5  |      |           |  =   |   6  |   7  |   8  |   9  |   0  |   -    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |  End   |   Q  |   W  |   E  |   R  |   T  |      |           |Delete| W Up |W Left| M Up |WRight|   P  |   \    |
+ * |        |   Q  |   W  |   E  |   R  |   T  |      |           |Delete| W Up |W Left| M Up |WRight|   P  |   \    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |Page Up |   A  |   S  |   D  |   F  |   G  |------|           |------|W Down|M Down| M Up |MRight|   ;  |   -    |
+ * |L Shift(|   A  |   S  |   D  |   F  |   G  |------|           |------|W Down|M Down| M Up |MRight|   ;  |R Shift)|
  * |--------+------+------+------+------+------| Left |           |Right |------+------+------+------+------+--------|
- * |PageDown|   Z  |   X  |   C  |   V  |   B  | GUI  |           |GUI   |   N  |   M  |   ,  |   .  |   /  |   =    |
+ * | L Ctrl |   Z  |   X  |   C  |   V  |   B  | GUI  |           |GUI   |   N  |   M  |   ,  |   .  |   /  | R Ctrl |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |ESC/~`|  '"  | Left |Right |                                       |  Up  | Down |   [  |   ]  |       |
+ *   |L Alt |ESC/~`|  '"  | Left |Right |                                       |  Up  | Down |   [  |   ]  |R Alt |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        |L Alt | Swap |       | MOUS |Butt 5|
+ *                                        |      |      |       | MOUS |Butt 5|
  *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |L Ctrl|       |Butt 4|      |      |
+ *                                 |      |      | Home |       |Butt 4|      |      |
  *                                 |Space | Tab  |------|       |------|LClick|RClick|
- *                                 |      |      |Shift(|       |MClick|      |      |
+ *                                 |      |      |Sw/End|       |MClick|      |      |
  *                                 `--------------------'       `--------------------'
  */
     [MOUS] = LAYOUT_ergodox_pretty(
@@ -115,22 +115,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap 3: Arrow layer
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |  Home  |   1  |   2  |   3  |   4  |   5  |      |           | ARRW |   6  |   7  |   8  |   9  |   0  |        |
+ * |        |   1  |   2  |   3  |   4  |   5  |      |           |  =   |   6  |   7  |   8  |   9  |   0  |   -    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |  End   |   Q  |   W  |   E  |   R  |   T  |      |           |Delete|   Y  |   U  |  Up  |   O  |   P  |   \    |
+ * |        |   Q  |   W  |   E  |   R  |   T  |      |           |Delete|   Y  |   U  |  Up  |   O  |   P  |   \    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |Page Up |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  | Left | Down |Right |   ;  |   -    |
+ * |L Shift(|   A  |   S  |   D  |   F  |   G  |------|           |------|   H  | Left | Down |Right |   ;  |R Shift)|
  * |--------+------+------+------+------+------| Left |           |Right |------+------+------+------+------+--------|
- * |PageDown|   Z  |   X  |   C  |   V  |   B  | GUI  |           |GUI   |   N  |   M  |   ,  |   .  |   /  |   =    |
+ * | L Ctrl |   Z  |   X  |   C  |   V  |   B  | GUI  |           |GUI   |   N  |   M  |   ,  |   .  |   /  | R Ctrl |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |ESC/~`|  '"  | Left |Right |                                       |  Up  | Down |   [  |   ]  |       |
+ *   |L Alt |ESC/~`|  '"  | Left |Right |                                       |  Up  | Down |   [  |   ]  |R Alt |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        |L Alt | Swap |       |      |R Alt |
+ *                                        |      |      |       |      | ARRW |
  *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |L Alt |       |R Alt |      |      |
+ *                                 |      |      | Home |       |PageUp|      |      |
  *                                 |Space | Tab  |------|       |------|Enter |BackSp|
- *                                 |      |      |Shift(|       |Shift)|      |      |
+ *                                 |      |      |Sw/End|       |PageDn|      |      |
  *                                 `--------------------'       `--------------------'
  */
     [ARRW] = LAYOUT_ergodox_pretty(
