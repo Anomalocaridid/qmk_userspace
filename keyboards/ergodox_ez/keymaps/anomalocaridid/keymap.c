@@ -11,7 +11,7 @@ enum layers {
 };
 
 enum custom_keycodes_keymap {
-    ALTCASE = KEYMAP_SAFE_RANGE, // Alternate uppercase and lowercase automatically
+    ALTCASE = USER_SAFE_RANGE, // Alternate uppercase and lowercase automatically
 };
 
 // clang-format off
