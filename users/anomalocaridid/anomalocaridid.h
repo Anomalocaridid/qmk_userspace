@@ -9,7 +9,7 @@
 enum custom_keycodes_user {
     VRSN = SAFE_RANGE,
     FLASH, // Type qmk command for flashing firmware
-    KEYMAP_SAFE_RANGE,
+    USER_SAFE_RANGE,
 };
 
 void send_version(void);
