@@ -11,6 +11,3 @@ enum custom_keycodes_user {
     FLASH, // Type qmk command for flashing firmware
     USER_SAFE_RANGE,
 };
-
-void send_version(void);
-void send_flash_command(void);
