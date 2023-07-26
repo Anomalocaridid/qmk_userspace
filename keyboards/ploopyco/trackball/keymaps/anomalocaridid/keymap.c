@@ -38,9 +38,9 @@ enum td_keycodes { VRSN_FLASH };
 typedef enum { TD_NONE, TD_UNKNOWN, TD_SINGLE_TAP, TD_DOUBLE_TAP } td_state_t;
 
 // determine tap dance state
-td_state_t cur_dance(qk_tap_dance_state_t *state);
+td_state_t cur_dance(tap_dance_state_t *state);
 
-void vrsn_flash_res(qk_tap_dance_state_t *state, void *user_data);
+void vrsn_flash_res(tap_dance_state_t *state, void *user_data);
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -78,7 +78,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
 
 report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     if (horizontal_scroll) {
-        int8_t h = mouse_report.h;
+        int8_t h       = mouse_report.h;
         mouse_report.h = -mouse_report.v;
         mouse_report.v = h;
     }
@@ -87,7 +87,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 }
 
 // tap dance functions
-td_state_t cur_dance(qk_tap_dance_state_t *state) {
+td_state_t cur_dance(tap_dance_state_t *state) {
     switch (state->count) {
         case 1:
             return TD_SINGLE_TAP;
@@ -98,7 +98,7 @@ td_state_t cur_dance(qk_tap_dance_state_t *state) {
     }
 }
 
-void vrsn_flsh(qk_tap_dance_state_t *state, void *user_data) {
+void vrsn_flsh(tap_dance_state_t *state, void *user_data) {
     switch (cur_dance(state)) {
         case TD_SINGLE_TAP:
             send_version();
@@ -111,6 +111,6 @@ void vrsn_flsh(qk_tap_dance_state_t *state, void *user_data) {
     }
 }
 
-qk_tap_dance_action_t tap_dance_actions[] = {
+tap_dance_action_t tap_dance_actions[] = {
     [VRSN_FLASH] = ACTION_TAP_DANCE_FN(vrsn_flsh) // VRSN/FLSH
 };
