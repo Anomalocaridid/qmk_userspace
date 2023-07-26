@@ -30,7 +30,7 @@ enum layers {
 };
 
 enum custom_keycodes_keymap {
-    HORI_SCROLL = KEYMAP_SAFE_RANGE,
+    HORI_SCROLL = USER_SAFE_RANGE,
 };
 
 enum td_keycodes { VRSN_FLASH };
