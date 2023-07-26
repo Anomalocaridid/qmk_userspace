@@ -3,7 +3,6 @@
 
 # Enable desired features
 LTO_ENABLE = yes       # Enable Link Time Optimization
-TAP_DANCE_ENABLE = yes # Enable Tap Dance
 
 # Disable unused features
 EXTRAKEY_ENABLE = no   # Disable system control keys

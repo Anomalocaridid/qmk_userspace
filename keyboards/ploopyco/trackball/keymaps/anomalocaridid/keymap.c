@@ -33,15 +33,6 @@ enum custom_keycodes_keymap {
     HORI_SCROLL = USER_SAFE_RANGE,
 };
 
-enum td_keycodes { VRSN_FLASH };
-
-typedef enum { TD_NONE, TD_UNKNOWN, TD_SINGLE_TAP, TD_DOUBLE_TAP } td_state_t;
-
-// determine tap dance state
-td_state_t cur_dance(tap_dance_state_t *state);
-
-void vrsn_flash_res(tap_dance_state_t *state, void *user_data);
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT( /* Base */
@@ -50,13 +41,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [SCRL] = LAYOUT(
-        DRAG_SCROLL, HORI_SCROLL, TD(VRSN_FLASH),
+        DRAG_SCROLL, HORI_SCROLL, FLASH,
         DPI_CONFIG, _______
     ),
 
     [XTRA] = LAYOUT(
         KC_BTN6, KC_BTN8, _______,
-        KC_BTN7, QK_BOOT
+        KC_BTN7, VRSN
     ),
 };
 
@@ -85,32 +76,3 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
 
     return mouse_report;
 }
-
-// tap dance functions
-td_state_t cur_dance(tap_dance_state_t *state) {
-    switch (state->count) {
-        case 1:
-            return TD_SINGLE_TAP;
-        case 2:
-            return TD_DOUBLE_TAP;
-        default:
-            return TD_UNKNOWN;
-    }
-}
-
-void vrsn_flsh(tap_dance_state_t *state, void *user_data) {
-    switch (cur_dance(state)) {
-        case TD_SINGLE_TAP:
-            send_version();
-            break;
-        case TD_DOUBLE_TAP:
-            send_flash_command();
-            break;
-        default:
-            break;
-    }
-}
-
-tap_dance_action_t tap_dance_actions[] = {
-    [VRSN_FLASH] = ACTION_TAP_DANCE_FN(vrsn_flsh) // VRSN/FLSH
-};
