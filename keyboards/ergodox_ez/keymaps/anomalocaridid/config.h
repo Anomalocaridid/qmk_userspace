@@ -3,10 +3,10 @@
   See config.h options at https://docs.qmk.fm/#/config_options?id=the-configh-file
 */
 // Settings
-#define RGB_MATRIX_STARTUP_SPD 60
-#define RGB_MATRIX_STARTUP_MODE RGB_MATRIX_MULTISPLASH
-#define RGB_MATRIX_STARTUP_HUE 213 // default hue is same as HSV_MAGENTA
-#define LAYER_STATE_8BIT // Limit layers to 8 to save space 
+#define RGB_MATRIX_DEFAULT_SPD 60
+#define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_MULTISPLASH
+#define RGB_MATRIX_DEFAULT_HUE 213 // default hue is same as HSV_MAGENTA
+#define LAYER_STATE_8BIT           // Limit layers to 8 to save space
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
 // Enable desired features
