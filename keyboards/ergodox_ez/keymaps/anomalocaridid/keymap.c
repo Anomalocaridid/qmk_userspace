@@ -145,12 +145,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
 };
-// clang-format on
 
-// void keyboard_post_init_user(void) {
-// }
-
-// clang-format off
 /*  ---- LEFT HAND ----     ---- RIGHT HAND ---- */
 #define LED_LAYOUT_ergodox_pretty(                \
     L01,L02,L03,L04,L05,    R01,R02,R03,R04,R05,  \
@@ -201,6 +196,13 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     ),
 };
 // clang-format on
+
+// Set rgb matrix defaults
+void keyboard_post_init_user(void) {
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_MULTISPLASH);
+    rgb_matrix_sethsv_noeeprom(HSV_MAGENTA);
+}
+
 extern rgb_config_t rgb_matrix_config;
 
 void set_layer_color(int layer) {
