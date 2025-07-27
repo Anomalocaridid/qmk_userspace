@@ -20,3 +20,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     return process_record_keymap(keycode, record);
 }
+
+// If magic keycodes are disabled, override placeholder functions to take up less space
+#ifndef MAGIC_ENABLE
+uint16_t keycode_config(uint16_t keycode) {
+    return keycode;
+}
+uint8_t mod_config(uint8_t mod) {
+    return mod;
+}
+#endif

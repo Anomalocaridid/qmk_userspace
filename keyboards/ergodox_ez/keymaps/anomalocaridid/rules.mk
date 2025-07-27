@@ -13,3 +13,4 @@ COMMAND_ENABLE = no        # Disable debugging commands
 EXTRAKEY_ENABLE = no       # Disable system and audio control keys
 MUSIC_ENABLE = no          # Disable audio (unsupported)
 UNICODE_ENABLE = no        # Disable Unicode support
+MAGIC_ENABLE = no          # Disable magic keycodes

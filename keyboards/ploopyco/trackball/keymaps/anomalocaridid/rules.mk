@@ -7,3 +7,4 @@ LTO_ENABLE = yes       # Enable Link Time Optimization
 # Disable unused features
 EXTRAKEY_ENABLE = no   # Disable system control keys
 MUSIC_ENABLE = no      # Disable audio (unsupported)
+MAGIC_ENABLE = no      # Disable magic keycodes
