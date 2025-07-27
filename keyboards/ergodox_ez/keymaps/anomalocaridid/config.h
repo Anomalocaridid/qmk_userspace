@@ -4,7 +4,7 @@
 */
 // Settings
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
-#define FORCE_NKRO
+#define NKRO_DEFAULT_ON true
 
 // Disable undesired animations
 #undef ENABLE_RGB_MATRIX_ALPHAS_MODS

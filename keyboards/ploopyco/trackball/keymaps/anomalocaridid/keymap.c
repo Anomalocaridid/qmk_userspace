@@ -36,18 +36,18 @@ enum custom_keycodes_keymap {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT( /* Base */
-        KC_BTN1, KC_BTN3, LT(XTRA, KC_BTN4), // Primary Buttons
-        KC_BTN2, LT(SCRL, KC_BTN5)           // Secondary Buttons
+        MS_BTN1, MS_BTN3, LT(XTRA, MS_BTN4), // Primary Buttons
+        MS_BTN2, LT(SCRL, MS_BTN5)           // Secondary Buttons
     ),
 
     [SCRL] = LAYOUT(
         DRAG_SCROLL, HORI_SCROLL, FLASH,
-        DPI_CONFIG, _______
+        DPI_CONFIG,  _______
     ),
 
     [XTRA] = LAYOUT(
-        KC_BTN6, KC_BTN8, _______,
-        KC_BTN7, VRSN
+        MS_BTN6, MS_BTN8, _______,
+        MS_BTN7, VRSN
     ),
 };
 
