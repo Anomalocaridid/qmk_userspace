@@ -67,12 +67,11 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
     if (horizontal_scroll) {
-        int8_t h       = mouse_report.h;
-        mouse_report.h = -mouse_report.v;
-        mouse_report.v = h;
+        tap_code(clockwise ? MS_WHLL : MS_WHLR);
+        return false;
     }
 
-    return mouse_report;
+    return true;
 }
