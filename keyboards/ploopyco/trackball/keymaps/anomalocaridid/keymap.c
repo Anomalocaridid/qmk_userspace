@@ -41,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [SCRL] = LAYOUT(
-        DRAG_SCROLL, HORI_SCROLL, FLASH,
+        DRAG_SCROLL, HORI_SCROLL, QK_MAKE,
         DPI_CONFIG,  _______
     ),
 

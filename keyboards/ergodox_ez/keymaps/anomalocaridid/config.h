@@ -5,6 +5,7 @@
 // Settings
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 #define NKRO_DEFAULT_ON true
+#define ENABLE_COMPILE_KEYCODE // Add QK_MAKE key
 
 // Disable undesired animations
 #undef ENABLE_RGB_MATRIX_ALPHAS_MODS
