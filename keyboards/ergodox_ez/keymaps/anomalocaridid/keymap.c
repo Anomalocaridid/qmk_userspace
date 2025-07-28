@@ -145,56 +145,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
 };
-
-/*  ---- LEFT HAND ----     ---- RIGHT HAND ---- */
-#define LED_LAYOUT_ergodox_pretty(                \
-    L01,L02,L03,L04,L05,    R01,R02,R03,R04,R05,  \
-    L11,L12,L13,L14,L15,    R11,R12,R13,R14,R15,  \
-    L21,L22,L23,L24,L25,    R21,R22,R23,R24,R25,  \
-    L31,L32,L33,L34,L35,    R31,R32,R33,R34,R35,  \
-    L41,L42,L43,L44,            R42,R43,R44,R45   \
-)                                                 \
-                                                  \
-   /* matrix positions */                         \
-    {                                             \
-      R01, R02, R03, R04, R05,                    \
-      R11, R12, R13, R14, R15,                    \
-      R21, R22, R23, R24, R25,                    \
-      R31, R32, R33, R34, R35,                    \
-           R42, R43, R44, R45,                    \
-                                                  \
-      L05, L04, L03, L02, L01,                    \
-      L15, L14, L13, L12, L11,                    \
-      L25, L24, L23, L22, L21,                    \
-      L35, L34, L33, L32, L31,                    \
-           L44, L43, L42, L41                     \
-    }
-
-const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
-    [FNCT] = LED_LAYOUT_ergodox_pretty(
-        {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE},        {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE},
-        {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE},        {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE},
-        {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE}, {HSV_PURPLE}, {HSV_OFF},           {HSV_OFF},    {HSV_OFF},    {HSV_OFF},    {HSV_OFF},    {HSV_OFF},
-        {HSV_OFF},    {HSV_OFF},    {HSV_OFF},    {HSV_OFF},    {HSV_OFF},           {HSV_OFF},    {HSV_OFF},    {HSV_OFF},    {HSV_OFF},    {HSV_OFF},
-        {HSV_OFF},    {HSV_OFF},    {HSV_OFF},    {HSV_OFF},                                       {HSV_OFF},    {HSV_OFF},    {HSV_OFF},    {HSV_OFF}
-    ),
-
-    [MOUS] = LED_LAYOUT_ergodox_pretty(
-        {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF},        {HSV_OFF},     {HSV_OFF},     {HSV_OFF},  {HSV_OFF},     {HSV_OFF},
-        {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF},        {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_CYAN}, {HSV_MAGENTA}, {HSV_OFF},
-        {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF},        {HSV_MAGENTA}, {HSV_CYAN},    {HSV_CYAN}, {HSV_CYAN},    {HSV_OFF},
-        {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF},        {HSV_OFF},     {HSV_OFF},     {HSV_OFF},  {HSV_OFF},     {HSV_OFF},
-        {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF},                                  {HSV_OFF},     {HSV_OFF},  {HSV_OFF},     {HSV_OFF}
-    ),
-
-    [ARRW] = LED_LAYOUT_ergodox_pretty(
-        {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF},        {HSV_OFF}, {HSV_OFF},     {HSV_OFF},     {HSV_OFF},     {HSV_OFF},
-        {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF},        {HSV_OFF}, {HSV_OFF},     {HSV_MAGENTA}, {HSV_OFF},     {HSV_OFF},
-        {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF},        {HSV_OFF}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_MAGENTA}, {HSV_OFF},
-        {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF},        {HSV_OFF}, {HSV_OFF},     {HSV_OFF},     {HSV_OFF},     {HSV_OFF},
-        {HSV_OFF}, {HSV_OFF}, {HSV_OFF}, {HSV_OFF},                              {HSV_OFF},     {HSV_OFF},     {HSV_OFF},     {HSV_OFF}
-    ),
-};
 // clang-format on
 
 // Set rgb matrix defaults
@@ -203,34 +153,32 @@ void keyboard_post_init_user(void) {
     rgb_matrix_sethsv_noeeprom(HSV_MAGENTA);
 }
 
-extern rgb_config_t rgb_matrix_config;
-
-void set_layer_color(int layer) {
-    for (int i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
-        HSV hsv = {
-            .h = pgm_read_byte(&ledmap[layer][i][0]),
-            .s = pgm_read_byte(&ledmap[layer][i][1]),
-            .v = pgm_read_byte(&ledmap[layer][i][2]),
-        };
-        if (!hsv.h && !hsv.s && !hsv.v) {
-            rgb_matrix_set_color(i, 0, 0, 0);
-        } else {
-            RGB   rgb = hsv_to_rgb(hsv);
-            float f   = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-            rgb_matrix_set_color(i, f * rgb.r, f * rgb.g, f * rgb.b);
-        }
-    }
-}
-
-bool rgb_matrix_indicators_user(void) {
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (rgb_matrix_get_suspend_state() || keyboard_config.disable_layer_led) {
         return false;
     }
+    // Indicate the layer with the RGB colors, but only on keys with configured keycodes
+    if (get_highest_layer(layer_state) > 0) {
+        uint8_t layer = get_highest_layer(layer_state);
 
-    uint8_t layer = biton32(layer_state);
+        for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+            for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+                uint8_t index = g_led_config.matrix_co[row][col];
 
-    if (layer > BASE) {
-        set_layer_color(layer);
+                uint16_t keycode = keymap_key_to_keycode(layer, (keypos_t){col, row});
+
+                if (index >= led_min && index < led_max && index != NO_LED && keycode > KC_TRNS) {
+                    // NOTE: make sure to distinguish mouse keys from each other
+                    if (IS_MOUSEKEY_MOVE(keycode)) {
+                        rgb_matrix_set_color(index, RGB_CYAN);
+                    } else if (IS_MOUSEKEY_WHEEL(keycode)) {
+                        rgb_matrix_set_color(index, RGB_MAGENTA);
+                    } else {
+                        rgb_matrix_set_color(index, RGB_PURPLE);
+                    }
+                }
+            }
+        }
     }
     return false;
 }
