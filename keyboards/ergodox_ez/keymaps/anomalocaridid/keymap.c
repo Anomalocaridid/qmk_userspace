@@ -1,5 +1,3 @@
-#include "modifiers.h"
-#include QMK_KEYBOARD_H
 // userspace code
 #include "anomalocaridid.h"
 
