@@ -3,6 +3,7 @@
 
 # Enable desired features
 LTO_ENABLE = yes       # Enable Link Time Optimization
+ENCODER_MAP_ENABLE = yes   # Enable encoder map TODO: remove after this is made default behavior
 
 # Disable unused features
 EXTRAKEY_ENABLE = no   # Disable system control keys

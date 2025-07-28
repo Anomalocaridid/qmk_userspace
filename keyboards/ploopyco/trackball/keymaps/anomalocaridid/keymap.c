@@ -18,15 +18,17 @@
 // userspace code
 #include "anomalocaridid.h"
 
+#include "keycodes.h"
+
 enum layers {
     BASE, // default layer
     SCRL, // scroll modifier layer
     XTRA, // extra mouse buttons
+    HORI  // horizontal scrolling overlay
 };
 
-enum custom_keycodes_keymap {
-    HORI_SCROLL = USER_SAFE_RANGE,
-};
+// enum custom_keycodes_keymap {
+// };
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -36,7 +38,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [SCRL] = LAYOUT(
-        DRAG_SCROLL, HORI_SCROLL, QK_MAKE,
+        DRAG_SCROLL, TG(HORI), QK_MAKE,
         DPI_CONFIG,  _______
     ),
 
@@ -44,29 +46,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         MS_BTN6, MS_BTN8, _______,
         MS_BTN7, VRSN
     ),
+
+    // This layer should not alter any of the mouse buttons
+    [HORI] = LAYOUT(
+        _______, _______, _______,
+        _______, _______
+    ),
 };
 
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+    [BASE] = { ENCODER_CCW_CW(MS_WHLD, MS_WHLU) },
+    [SCRL] = { ENCODER_CCW_CW(_______, _______) },
+    [XTRA] = { ENCODER_CCW_CW(_______, _______) },
+    [HORI] = { ENCODER_CCW_CW(MS_WHLR, MS_WHLL) }
+};
 // clang-format on
-extern uint16_t dpi_array[];
-
-static bool horizontal_scroll = false;
-
-bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case HORI_SCROLL:
-            if (record->event.pressed) {
-                horizontal_scroll ^= 1;
-            }
-            return false;
-    }
-    return true;
-}
-
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (horizontal_scroll) {
-        tap_code(clockwise ? MS_WHLL : MS_WHLR);
-        return false;
-    }
-
-    return true;
-}
