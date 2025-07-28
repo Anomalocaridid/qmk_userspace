@@ -1,5 +1,5 @@
+#include "modifiers.h"
 #include QMK_KEYBOARD_H
-#include "version.h"
 // userspace code
 #include "anomalocaridid.h"
 
@@ -186,13 +186,12 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 static bool alt_case_toggle = false;
 static bool alt_case_shift  = false;
 
-// bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_A ... KC_Z:
             if (alt_case_toggle && record->event.pressed) {
                 if (alt_case_shift) {
-                    set_oneshot_mods(get_oneshot_mods() | MOD_MASK_SHIFT);
+                    add_oneshot_mods(MOD_BIT_LSHIFT);
                 }
                 alt_case_shift ^= 1;
             }
