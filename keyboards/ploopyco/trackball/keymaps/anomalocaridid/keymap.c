@@ -15,9 +15,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 // userspace code
 #include "anomalocaridid.h"
-
 #include "keycodes.h"
 
 enum layers {
@@ -53,11 +53,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______
     ),
 };
+// clang-format on
 
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [BASE] = { ENCODER_CCW_CW(MS_WHLD, MS_WHLU) },
-    [SCRL] = { ENCODER_CCW_CW(_______, _______) },
-    [XTRA] = { ENCODER_CCW_CW(_______, _______) },
-    [HORI] = { ENCODER_CCW_CW(MS_WHLR, MS_WHLL) }
+    [BASE] = {ENCODER_CCW_CW(MS_WHLD, MS_WHLU)},
+    [SCRL] = {ENCODER_CCW_CW(_______, _______)},
+    [XTRA] = {ENCODER_CCW_CW(_______, _______)},
+    [HORI] = {ENCODER_CCW_CW(MS_WHLR, MS_WHLL)},
 };
-// clang-format on
