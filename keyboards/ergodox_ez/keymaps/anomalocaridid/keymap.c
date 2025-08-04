@@ -146,12 +146,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-// Set rgb matrix defaults
-void keyboard_post_init_user(void) {
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_MULTISPLASH);
-    rgb_matrix_sethsv_noeeprom(HSV_MAGENTA);
-}
-
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     if (rgb_matrix_get_suspend_state() || keyboard_config.disable_layer_led) {
         return false;

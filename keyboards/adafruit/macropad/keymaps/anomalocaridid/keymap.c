@@ -295,11 +295,6 @@ static void render_qmk_logo(void) {
     oled_write_raw_P(qmk_logo, sizeof(qmk_logo));
 }
 
-void keyboard_post_init_user(void) {
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_MULTISPLASH);
-    rgb_matrix_sethsv_noeeprom(HSV_MAGENTA);
-}
-
 layer_state_t layer_state_set_user(layer_state_t state) {
     redraw_layout_guide = true;
     return state;

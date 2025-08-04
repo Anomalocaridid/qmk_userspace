@@ -34,3 +34,11 @@ uint8_t mod_config(uint8_t mod) {
     return mod;
 }
 #endif
+
+// If rgb matrix is enabled, set default state
+#ifdef RGB_MATRIX_ENABLE
+void keyboard_post_init_user(void) {
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_MULTISPLASH);
+    rgb_matrix_sethsv_noeeprom(HSV_MAGENTA);
+}
+#endif
